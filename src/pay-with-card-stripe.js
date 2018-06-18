@@ -4,6 +4,7 @@ import update from 'immutability-helper';
 
 import {injectStripe, CardElement, StripeProvider, Elements} from 'react-stripe-elements';
 
+
 const handleBlur = () => {
     console.log('[blur]');
 };
@@ -56,7 +57,9 @@ class _CardForm extends React.Component {
                     const data = model.objectData;
                     const newDataCopy = update(data, {0: {"properties": {1: {"contentValue": {$set: payload.token.id}}}}});
                     manywho.state.setComponent(componentId, { objectData: newDataCopy }, flowKey, true,);
-
+                    ev.stopPropagation();
+                    var outcomes = manywho.model.getOutcomes(componentId, flowKey);
+                    manywho.component.onOutcome(outcomes[0], null, flowKey);
                 });
         } else {
             console.log("Stripe.js hasn't loaded yet.");
@@ -130,5 +133,10 @@ class PayWithCardStripe extends React.Component {
 }
 
 manywho.component.register('pay-with-card-stripe', PayWithCardStripe);
+manywho.component.register("outcomes", null);
 
 export default PayWithCardStripe;
+
+
+
+
