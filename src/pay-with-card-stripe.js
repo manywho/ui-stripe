@@ -2,7 +2,7 @@ import * as React from 'react';
 import './pay-with-card-stripe.css';
 import update from 'immutability-helper';
 
-import {injectStripe, CardElement, StripeProvider, Elements} from 'react-stripe-elements';
+import {injectStripe, CardNumberElement, CardElement,CardExpiryElement, CardCVCElement, StripeProvider, PostalCodeElement, Elements} from 'react-stripe-elements';
 
 
 const handleBlur = () => {
@@ -39,10 +39,13 @@ const createOptions = (fontSize) => {
     };
 };
 
-class _CardForm extends React.Component {
+
+class _SplitForm extends React.Component {
+
     constructor() {
         super();
     }
+
 
     handleSubmit = (ev) => {
         ev.preventDefault();
@@ -69,8 +72,38 @@ class _CardForm extends React.Component {
         return (
             <form onSubmit={this.handleSubmit}>
                 <label>
-                    Card details
-                    <CardElement
+                    Card number
+                    <CardNumberElement
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        onFocus={handleFocus}
+                        onReady={handleReady}
+                        {...createOptions(this.props.fontSize)}
+                    />
+                </label>
+                <label>
+                    Expiration date
+                    <CardExpiryElement
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        onFocus={handleFocus}
+                        onReady={handleReady}
+                        {...createOptions(this.props.fontSize)}
+                    />
+                </label>
+                <label>
+                    CVC
+                    <CardCVCElement
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        onFocus={handleFocus}
+                        onReady={handleReady}
+                        {...createOptions(this.props.fontSize)}
+                    />
+                </label>
+                <label>
+                    Postal code
+                    <PostalCodeElement
                         onBlur={handleBlur}
                         onChange={handleChange}
                         onFocus={handleFocus}
@@ -83,8 +116,8 @@ class _CardForm extends React.Component {
         );
     }
 }
+const SplitForm = injectStripe(_SplitForm);
 
-const CardForm = injectStripe(_CardForm);
 
 class Checkout extends React.Component {
     constructor() {
@@ -109,7 +142,7 @@ class Checkout extends React.Component {
         return (
             <div className="Checkout">
                 <Elements>
-                    <CardForm fontSize={elementFontSize} componentId={this.props.componentId} flowKey={this.props.flowKey} />
+                    <SplitForm fontSize={elementFontSize} componentId={this.props.componentId} flowKey={this.props.flowKey} />
                 </Elements>
             </div>
         );
