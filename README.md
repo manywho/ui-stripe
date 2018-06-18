@@ -1,20 +1,15 @@
-A small `webpack` based boilerplate for creating custom Boomi Flow UI components.
+# Stripe Components
+Component to integrate a stripe form inside a flow
 
 ## Setup
 
 - Download or clone this repo
 - `npm install`
 
-## Included Components
 
-This boilerplate includes examples components for:
+## Updating Stripe Component
 
-- Basic rendering `basic.tsx`
-- Input `input.tsx`
-
-## Writing a Custom Component
-
-Create the custom component in a new `.tsx` file, then re-export them in `index.js` e.g. `export * from './component';`. Any custom styles can be added in a separate `.css` file which is imported into the `.tsx` file.
+Modify the files pay-with-card-stripe.js and pay-with-card-stripe.css.
 
 ## Testing
 
